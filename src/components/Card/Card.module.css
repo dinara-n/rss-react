@@ -1,0 +1,32 @@
+.card {
+  width: 200px;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.title {
+  text-align: center;
+}
+
+.image {
+  width: 200x;
+  height: 200px;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.parameter {
+  display: flex;
+  justify-content: space-between;
+}
+
+.paramName {
+  color: gray;
+}
+
+.paramData {
+  margin: 0;
+}

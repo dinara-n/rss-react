@@ -1,0 +1,19 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.link {
+  color: rgb(239, 240, 252);
+}
+
+.link:hover,
+.link__active:hover {
+  color: rgb(231, 220, 122);
+}
+
+.link__active {
+  color: rgb(231, 220, 122);
+}
