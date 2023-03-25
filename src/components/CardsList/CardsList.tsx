@@ -1,17 +1,23 @@
 import React from 'react';
 import Card from '../../components/Card/Card';
-import { cardsData } from '../../assets/data';
 import styles from './CardsList.module.css';
+import { CardDataType } from 'types/types';
 
-function CardsList() {
+type CardsListProps = {
+  cards: CardDataType[];
+};
+
+function CardsList(props: CardsListProps) {
+  const { cards } = props;
   return (
     <section>
       <ul className={styles.list}>
-        {cardsData.map((card) => (
-          <li key={card.name}>
-            <Card cardData={card} />
-          </li>
-        ))}
+        {cards.length > 0 &&
+          cards.map((card) => (
+            <li key={card.name}>
+              <Card cardData={card} />
+            </li>
+          ))}
       </ul>
     </section>
   );

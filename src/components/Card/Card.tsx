@@ -1,12 +1,12 @@
 import React from 'react';
-import { cardDataType } from 'types/types';
+import { CardDataType } from 'types/types';
 import styles from './Card.module.css';
 import male from '../../assets/male.png';
 import female from '../../assets/female.png';
 import neuter from '../../assets/genders.png';
 
 type CardProps = {
-  cardData: cardDataType;
+  cardData: CardDataType;
 };
 
 function Card(props: CardProps) {
