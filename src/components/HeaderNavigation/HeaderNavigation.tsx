@@ -10,6 +10,12 @@ function HeaderNavigation() {
       </NavLink>
       <NavLink
         className={({ isActive }) => (isActive ? styles.link__active : styles.link)}
+        to="/form"
+      >
+        Form
+      </NavLink>
+      <NavLink
+        className={({ isActive }) => (isActive ? styles.link__active : styles.link)}
         to="/about"
       >
         About us

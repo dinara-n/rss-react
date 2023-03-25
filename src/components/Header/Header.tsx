@@ -11,6 +11,9 @@ function Header(props: WithRouterProps) {
     case '/':
       currentPage = 'Catalog';
       break;
+    case '/form':
+      currentPage = 'Form';
+      break;
     case '/about':
       currentPage = 'About us';
       break;
