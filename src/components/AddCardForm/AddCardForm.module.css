@@ -1,11 +1,23 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
   gap: 20px;
+}
+
+.errorMessage {
+  margin: 0;
+  padding: 0;
+  min-height: 1.5rem;
+  text-align: center;
+  color: tomato;
+}
+
+.submitButton {
+  background-color: rgb(239, 240, 252);
 }

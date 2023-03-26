@@ -131,3 +131,24 @@ export const cardsData = [
     image: obiwanKenobi,
   },
 ];
+
+export const imageExtentions = [
+  'jpg',
+  'png',
+  'webp',
+  'gif',
+  'svg',
+  'tif',
+  'jfif',
+  'pjp',
+  'apng',
+  'pjpeg',
+  'avif',
+  'ico',
+  'tiff',
+  'bmp',
+  'xbm',
+  'jxl',
+  'jpeg',
+  'svgz',
+];

@@ -1,13 +1,9 @@
 import React from 'react';
 import AddCardForm from '../../components/AddCardForm/AddCardForm';
 import CardsList from '../../components/CardsList/CardsList';
-import { CardDataType } from '../../types/types';
+import { FormPageState } from '../../types/types';
 
 type FormPageProps = Record<string, never>;
-
-type FormPageState = {
-  cards: CardDataType[] | [];
-};
 
 class FormPage extends React.Component<FormPageProps, FormPageState> {
   constructor(props: FormPageProps) {

@@ -10,12 +10,12 @@
 }
 
 .image {
-  width: 200x;
+  width: 200px;
   height: 200px;
   display: block;
   margin: 0 auto;
   object-fit: cover;
-  object-position: center center;
+  object-position: top center;
 }
 
 .parameter {
