@@ -66,9 +66,8 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
     this.formAgreeRef = React.createRef();
   }
 
-  async handleFormSubmit(evt: React.FormEvent) {
-    evt.preventDefault();
-    await this.setState({
+  validateForm() {
+    this.setState({
       validationRules: {
         ...this.state.validationRules,
         nameNotEmpty: validateInputNotEmpty(this.formNameRef.current?.value ?? ''),
@@ -89,8 +88,9 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
         agreeIsChecked: validateAgreeIsChecked(this.formAgreeRef.current?.checked ?? false),
       },
     });
-    const formIsValid = !Object.values(this.state.validationRules).includes(false);
-    if (!formIsValid) return;
+  }
+
+  addNewCard() {
     this.props.setPageState({
       cards: [
         ...this.props.cards,
@@ -110,6 +110,15 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
         },
       ],
     });
+  }
+
+  async handleFormSubmit(evt: React.FormEvent) {
+    evt.preventDefault();
+    await this.validateForm();
+    const formIsValid = !Object.values(this.state.validationRules).includes(false);
+    if (formIsValid) {
+      this.addNewCard();
+    }
   }
 
   render() {
