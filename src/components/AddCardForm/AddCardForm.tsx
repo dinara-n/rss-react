@@ -22,6 +22,7 @@ const CharacterGenderArray = Object.values(CharacterGender) as Array<CharacterGe
 
 type AddCardFormState = {
   validationRules: ValidationRulesType;
+  submitPending: boolean;
 };
 
 type AddCardFormProps = {
@@ -53,7 +54,10 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
         imageIsImage: true,
         agreeIsChecked: true,
       },
+      submitPending: false,
     };
+    this.validateForm = this.validateForm.bind(this);
+    this.addNewCard = this.addNewCard.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.formRef = React.createRef();
     this.formNameRef = React.createRef();
@@ -117,6 +121,11 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
     await this.validateForm();
     const formIsValid = !Object.values(this.state.validationRules).includes(false);
     if (formIsValid) {
+      this.setState({ submitPending: true });
+      setTimeout(() => {
+        this.setState({ submitPending: false });
+        this.formRef.current?.reset();
+      }, 2000);
       this.addNewCard();
     }
   }
@@ -129,7 +138,10 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
         ? this.formGenderFemaleRef
         : this.formGenderNARef;
     return (
-      <form className={styles.form} onSubmit={this.handleFormSubmit}>
+      <form className={styles.form} onSubmit={this.handleFormSubmit} ref={this.formRef}>
+        <p className={styles.submitMessage}>
+          {this.state.submitPending ? 'The characher is saved' : ' '}
+        </p>
         <label className={styles.row} htmlFor="name">
           Name:
           <input type="text" name="name" id="name" ref={this.formNameRef} />
@@ -180,7 +192,7 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
           </div>
         </label>
         <p className={styles.errorMessage}>
-          {!this.state.validationRules.genderNotEmpty ? 'A gender should be selected' : ' '}
+          {!this.state.validationRules.genderNotEmpty ? 'Gender should be selected' : ' '}
         </p>
         <label className={styles.row} htmlFor="image">
           Image:
