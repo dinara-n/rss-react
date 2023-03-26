@@ -24,7 +24,7 @@ class FormPage extends React.Component<FormPageProps, FormPageState> {
     return (
       <>
         <h1>Form</h1>
-        <AddCardForm setPageState={this.setPageState} />
+        <AddCardForm cards={this.state.cards} setPageState={this.setPageState} />
         <CardsList cards={this.state.cards} />
       </>
     );

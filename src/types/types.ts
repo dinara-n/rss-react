@@ -1,21 +1,14 @@
 export type CardDataType = {
   name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
+  height?: string;
+  mass?: string;
+  hair_color?: string;
+  skin_color?: string;
+  eye_color?: string;
   birth_year: string;
+  species?: CharacterSpecies;
   gender: CharacterGender;
-  url: string;
-  image: string;
-};
-
-export type FormCardDataType = {
-  name: string;
-  birth_year: string;
-  species: CharacterSpecies;
-  gender: CharacterGender;
+  url?: string;
   image: string;
 };
 
