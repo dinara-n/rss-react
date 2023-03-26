@@ -12,12 +12,15 @@ function CardsList(props: CardsListProps) {
   return (
     <section>
       <ul className={styles.list}>
-        {cards.length > 0 &&
+        {cards.length ? (
           cards.map((card) => (
             <li key={card.name}>
               <Card cardData={card} />
             </li>
-          ))}
+          ))
+        ) : (
+          <p>No cards to display</p>
+        )}
       </ul>
     </section>
   );
