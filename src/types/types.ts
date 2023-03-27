@@ -19,6 +19,7 @@ export type FormPageState = {
 export type ValidationRulesType = {
   nameNotEmpty: boolean;
   nameStartsWithUppercase: boolean;
+  nameIsUnique: boolean;
   birthYearNotEmpty: boolean;
   speciesIsNotEmpty: boolean;
   genderNotEmpty: boolean;

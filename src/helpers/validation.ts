@@ -2,6 +2,7 @@ import { imageExtentions } from '../assets/data';
 
 export const validateInputNotEmpty = (inputValue: string) => !!inputValue;
 export const validateNameStartsWithUppercase = (value: string) => !!value.match(/^[A-Z]/);
+export const validateNameIsUnique = (value: string, names: string[]) => !names.includes(value);
 export const validateSelectIsNotEmpty = (selectValue: string) => selectValue !== 'default';
 export const validateGenderNotEmpty = (...args: boolean[]) => args.includes(true);
 export const validateImageNotEmpty = (files: FileList | null | undefined) => !!files?.length;

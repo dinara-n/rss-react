@@ -12,6 +12,7 @@ import {
   validateImageIsImage,
   validateImageNotEmpty,
   validateInputNotEmpty,
+  validateNameIsUnique,
   validateNameStartsWithUppercase,
   validateSelectIsNotEmpty,
 } from '../../helpers/validation';
@@ -52,6 +53,7 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
       validationRules: {
         nameNotEmpty: true,
         nameStartsWithUppercase: true,
+        nameIsUnique: true,
         birthYearNotEmpty: true,
         speciesIsNotEmpty: true,
         genderNotEmpty: true,
@@ -82,6 +84,10 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
         nameNotEmpty: validateInputNotEmpty(this.formNameRef.current?.value ?? ''),
         nameStartsWithUppercase: validateNameStartsWithUppercase(
           this.formNameRef.current?.value ?? ''
+        ),
+        nameIsUnique: validateNameIsUnique(
+          this.formNameRef.current?.value ?? '',
+          this.props.cards.map((card) => card.name)
         ),
         birthYearNotEmpty: validateInputNotEmpty(this.formBirthYearRef.current?.value ?? ''),
         speciesIsNotEmpty: validateSelectIsNotEmpty(
@@ -157,6 +163,7 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
           ref={this.formNameRef}
           nameNotEmpty={this.state.validationRules.nameNotEmpty}
           nameStartsWithUppercase={this.state.validationRules.nameStartsWithUppercase}
+          nameIsUnique={this.state.validationRules.nameIsUnique}
         />
         <FormSectionBirth
           ref={this.formBirthYearRef}
