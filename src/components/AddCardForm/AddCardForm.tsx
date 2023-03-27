@@ -15,9 +15,14 @@ import {
   validateNameStartsWithUppercase,
   validateSelectIsNotEmpty,
 } from '../../helpers/validation';
+import { FormSectionSpecies } from '../../components/FormSectionSpecies/FormSectionSpecies';
+import { FormSectionGender } from '../../components/FormSectionGender/FormSectionGender';
+import { FormSectionName } from '../../components/FormSectionName/FormSectionName';
+import { FormSectionBirth } from '../../components/FormSectionBirth/FormSectionBirth';
+import { FormSectionImage } from '../../components/FormSectionImage/FormSectionImage';
+import { FormSectionAgree } from '../../components/FormSectionAgree/FormSectionAgree';
 import styles from './AddCardForm.module.css';
 
-const CharacterSpeciesArray = Object.values(CharacterSpecies) as Array<CharacterSpecies>;
 const CharacterGenderArray = Object.values(CharacterGender) as Array<CharacterGender>;
 
 type AddCardFormState = {
@@ -131,87 +136,56 @@ class AddCardForm extends React.Component<AddCardFormProps, AddCardFormState> {
   }
 
   render() {
-    const getGenderRef = (gender: CharacterGender) =>
-      gender === CharacterGender.male
-        ? this.formGenderMaleRef
-        : gender === CharacterGender.female
-        ? this.formGenderFemaleRef
-        : this.formGenderNARef;
+    const getGenderRef = (gender: CharacterGender) => {
+      switch (gender) {
+        case CharacterGender.male:
+          return this.formGenderMaleRef;
+        case CharacterGender.female:
+          return this.formGenderFemaleRef;
+        case CharacterGender.notApplicable:
+          return this.formGenderNARef;
+        default:
+          return this.formGenderNARef;
+      }
+    };
     return (
       <form className={styles.form} onSubmit={this.handleFormSubmit} ref={this.formRef}>
         <p className={styles.submitMessage}>
           {this.state.submitPending ? 'The characher is saved' : ' '}
         </p>
-        <label className={styles.row} htmlFor="name">
-          Name:
-          <input type="text" name="name" id="name" ref={this.formNameRef} />
-        </label>
-        <p className={styles.errorMessage}>
-          {!this.state.validationRules.nameNotEmpty
-            ? 'Name should not be empty'
-            : !this.state.validationRules.nameStartsWithUppercase
-            ? 'Name should start with an uppercase letter'
-            : ' '}
-        </p>
-        <label className={styles.row} htmlFor="birth_year">
-          Date of birth:
-          <input type="date" name="birth_year" id="birth_year" ref={this.formBirthYearRef} />
-        </label>
-        <p className={styles.errorMessage}>
-          {!this.state.validationRules.birthYearNotEmpty ? 'Date of birth should be selected' : ' '}
-        </p>
-        <label className={styles.row} htmlFor="species">
-          Species:
-          <select name="species" id="species" ref={this.formSpeciesRef}>
-            <option key="default" value="default"></option>
-            {CharacterSpeciesArray.map((species) => (
-              <option key={species} value={species}>
-                {species}
-              </option>
-            ))}
-          </select>
-        </label>
-        <p className={styles.errorMessage}>
-          {!this.state.validationRules.speciesIsNotEmpty ? 'Species should be selected' : ' '}
-        </p>
+        <FormSectionName
+          ref={this.formNameRef}
+          nameNotEmpty={this.state.validationRules.nameNotEmpty}
+          nameStartsWithUppercase={this.state.validationRules.nameStartsWithUppercase}
+        />
+        <FormSectionBirth
+          ref={this.formBirthYearRef}
+          birthYearNotEmpty={this.state.validationRules.birthYearNotEmpty}
+        />
+        <FormSectionSpecies
+          ref={this.formSpeciesRef}
+          speciesIsNotEmpty={this.state.validationRules.speciesIsNotEmpty}
+        />
         <label className={styles.row}>
           Gender:
           <div>
             {CharacterGenderArray.map((gender) => (
-              <label key={gender} htmlFor={`gender-${gender}`}>
-                <input
-                  type="radio"
-                  name="gender"
-                  id={`gender-${gender}`}
-                  value={gender}
-                  ref={getGenderRef(gender)}
-                />
-                {` ${gender}`}
-              </label>
+              <FormSectionGender key={gender} gender={gender} ref={getGenderRef(gender)} />
             ))}
           </div>
         </label>
         <p className={styles.errorMessage}>
           {!this.state.validationRules.genderNotEmpty ? 'Gender should be selected' : ' '}
         </p>
-        <label className={styles.row} htmlFor="image">
-          Image:
-          <input type="file" accept="image/*" id="image" ref={this.formImageRef} />
-        </label>
-        <p className={styles.errorMessage}>
-          {!this.state.validationRules.imageNotEmpty
-            ? 'An image should be selected'
-            : !this.state.validationRules.imageIsImage
-            ? 'The file should be an image'
-            : ' '}
-        </p>
-        <label htmlFor="agree">
-          <input type="checkbox" name="agree" id="agree" value="agree" ref={this.formAgreeRef} />
-          {' Create a card for this character'}
-        </label>
-        <p className={styles.errorMessage}>
-          {!this.state.validationRules.agreeIsChecked ? 'This field should be checked' : ' '}
-        </p>
+        <FormSectionImage
+          ref={this.formImageRef}
+          imageNotEmpty={this.state.validationRules.imageNotEmpty}
+          imageIsImage={this.state.validationRules.imageIsImage}
+        />
+        <FormSectionAgree
+          ref={this.formAgreeRef}
+          agreeIsChecked={this.state.validationRules.agreeIsChecked}
+        />
         <button className={styles.submitButton} type="submit">
           Add character
         </button>
