@@ -7,7 +7,11 @@ type SiteContainerProps = {
 
 function SiteContainer(props: SiteContainerProps) {
   const { children } = props;
-  return <div className={styles.container}>{children}</div>;
+  return (
+    <div className={styles.container} data-testid="SiteContainer">
+      {children}
+    </div>
+  );
 }
 
 export default SiteContainer;
