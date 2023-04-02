@@ -1,0 +1,21 @@
+.header {
+  background-color: rgb(101, 109, 216);
+  padding: 30px;
+}
+
+.container {
+  width: 80%;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 50px;
+}
+
+.page {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(239, 240, 252);
+}
