@@ -1,47 +1,37 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './SearchBar.module.css';
 
-type SearchBarProps = Record<string, never>;
+function SearchBar() {
+  const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') ?? '');
+  const searchRef = useRef<string>(searchValue);
 
-type SearchBarState = {
-  value: string;
-};
+  useEffect(() => {
+    setSearchValue(localStorage.getItem('searchValue') ?? '');
+  }, []);
 
-class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
-  constructor(props: SearchBarProps | Readonly<SearchBarProps>) {
-    super(props);
-    this.state = { value: localStorage.getItem('searchValue') ?? '' };
-    this.handleChange = this.handleChange.bind(this);
-  }
+  useEffect(() => () => localStorage.setItem('searchValue', searchRef.current), [searchRef]);
 
-  componentDidMount(): void {
-    this.setState({ value: localStorage.getItem('searchValue') ?? '' });
-  }
+  useEffect(() => {
+    searchRef.current = searchValue;
+  }, [searchValue]);
 
-  componentWillUnmount(): void {
-    localStorage.setItem('searchValue', this.state.value);
-  }
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(evt.target.value);
+  };
 
-  handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
-    this.setState(() => {
-      return { value: evt.target.value };
-    });
-  }
-  render() {
-    return (
-      <>
-        <form>
-          <input
-            className={styles.search}
-            type="search"
-            value={this?.state?.value ?? ''}
-            onChange={this.handleChange}
-            placeholder="Search..."
-          />
-        </form>
-      </>
-    );
-  }
+  return (
+    <>
+      <form>
+        <input
+          className={styles.search}
+          type="search"
+          value={searchValue ?? ''}
+          onChange={handleChange}
+          placeholder="Search..."
+        />
+      </form>
+    </>
+  );
 }
 
 export default SearchBar;

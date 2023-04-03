@@ -1,10 +1,10 @@
 import React from 'react';
-import withRouter, { WithRouterProps } from '../../hocs/withRouter';
+import { useLocation } from 'react-router-dom';
 import HeaderNavigation from '../HeaderNavigation/HeaderNavigation';
 import styles from './Header.module.css';
 
-function Header(props: WithRouterProps) {
-  const { location } = props;
+function Header() {
+  const location = useLocation();
   const pathname = location.pathname ?? '/';
   let currentPage = 'Catalog';
   switch (pathname) {
@@ -31,4 +31,4 @@ function Header(props: WithRouterProps) {
   );
 }
 
-export default withRouter(Header);
+export default Header;

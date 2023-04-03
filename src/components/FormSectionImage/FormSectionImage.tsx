@@ -1,25 +1,32 @@
 import React from 'react';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
+import { validateImageIsImage } from '../../helpers/validation';
 import styles from './FormSectionImage.module.css';
 
 type FormSectionImageType = {
-  imageNotEmpty: boolean;
-  imageIsImage: boolean;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
 };
 
-export const FormSectionImage = React.forwardRef<HTMLInputElement, FormSectionImageType>(
-  ({ imageNotEmpty, imageIsImage }, ref) => (
+export const FormSectionImage = (props: FormSectionImageType) => {
+  const { register, errors } = props;
+  return (
     <>
       <label className={styles.row} htmlFor="image">
         Image:
-        <input type="file" accept="image/*" id="image" ref={ref} />
+        <input
+          {...register('image', {
+            required: 'An image should be selected',
+            validate: {
+              isImage: (value) => validateImageIsImage(value) || 'The file should be an image',
+            },
+          })}
+          type="file"
+          accept="image/*"
+          id="image"
+        />
       </label>
-      <p className={styles.errorMessage}>
-        {!imageNotEmpty
-          ? 'An image should be selected'
-          : !imageIsImage
-          ? 'The file should be an image'
-          : ' '}
-      </p>
+      <p className={styles.errorMessage}>{errors.image && errors.image?.message?.toString()}</p>
     </>
-  )
-);
+  );
+};
