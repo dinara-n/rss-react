@@ -1,9 +1,9 @@
 import React from 'react';
-import { describe, it } from 'vitest';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import AddCardForm from './AddCardForm';
-import { CharacterGender, CharacterSpecies, FormPageState } from 'types/types';
+import { CharacterGender, CharacterSpecies } from 'types/types';
 import biggsDardlighter from './BiggsHS-ANH.webp';
 
 const cards = [
@@ -16,13 +16,11 @@ const cards = [
   },
 ];
 
-const setPageState = (newState: FormPageState) => {
-  return { cards: newState };
-};
+const setCards = vi.fn();
 
 describe('AddCardForm', () => {
   it('renders itself', () => {
-    render(<AddCardForm cards={cards} setPageState={setPageState} />);
+    render(<AddCardForm cards={cards} setCards={setCards} />);
     expect(screen.getByText(/Name:/i)).toBeInTheDocument();
   });
 });

@@ -12,22 +12,6 @@ export type CardDataType = {
   image: string;
 };
 
-export type FormPageState = {
-  cards: CardDataType[] | [];
-};
-
-export type ValidationRulesType = {
-  nameNotEmpty: boolean;
-  nameStartsWithUppercase: boolean;
-  nameIsUnique: boolean;
-  birthYearNotEmpty: boolean;
-  speciesIsNotEmpty: boolean;
-  genderNotEmpty: boolean;
-  imageNotEmpty: boolean;
-  imageIsImage: boolean;
-  agreeIsChecked: boolean;
-};
-
 export enum CharacterGender {
   male = 'male',
   female = 'female',

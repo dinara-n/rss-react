@@ -1,20 +1,27 @@
 import React from 'react';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
 import styles from './FormSectionBirth.module.css';
 
 type FormSectionBirthType = {
-  birthYearNotEmpty: boolean;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
 };
 
-export const FormSectionBirth = React.forwardRef<HTMLInputElement, FormSectionBirthType>(
-  ({ birthYearNotEmpty }, ref) => (
+export const FormSectionBirth = (props: FormSectionBirthType) => {
+  const { register, errors } = props;
+  return (
     <>
       <label className={styles.row} htmlFor="birth_year">
         Date of birth:
-        <input type="date" name="birth_year" id="birth_year" ref={ref} />
+        <input
+          {...register('birthYear', { required: 'Date of birth should be selected' })}
+          type="date"
+          id="birth_year"
+        />
       </label>
       <p className={styles.errorMessage}>
-        {!birthYearNotEmpty ? 'Date of birth should be selected' : ' '}
+        {errors.birthYear && errors.birthYear?.message?.toString()}
       </p>
     </>
-  )
-);
+  );
+};

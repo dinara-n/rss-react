@@ -1,20 +1,26 @@
 import React from 'react';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form/dist/types';
 import styles from './FormSectionAgree.module.css';
 
 type FormSectionAgreeType = {
-  agreeIsChecked: boolean;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
 };
 
-export const FormSectionAgree = React.forwardRef<HTMLInputElement, FormSectionAgreeType>(
-  ({ agreeIsChecked }, ref) => (
+export const FormSectionAgree = (props: FormSectionAgreeType) => {
+  const { register, errors } = props;
+  return (
     <>
       <label htmlFor="agree">
-        <input type="checkbox" name="agree" id="agree" value="agree" ref={ref} />
+        <input
+          {...register('agree', { required: 'This field should be checked' })}
+          type="checkbox"
+          id="agree"
+          value="agree"
+        />
         {' Create a card for this character'}
       </label>
-      <p className={styles.errorMessage}>
-        {!agreeIsChecked ? 'This field should be checked' : ' '}
-      </p>
+      <p className={styles.errorMessage}>{errors.agree && errors.agree?.message?.toString()}</p>
     </>
-  )
-);
+  );
+};
