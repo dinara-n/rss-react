@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './SearchBar.module.css';
 import { CardDataType } from '../../types/types';
 import { updateCardsData } from '../../helpers/api';
+import searchIcon from '../../assets/search.png';
 
 type SearchBarProps = {
   setCardsData: (value: CardDataType[]) => void;
@@ -34,15 +35,22 @@ function SearchBar(props: SearchBarProps) {
 
   return (
     <>
-      <form>
+      <form className={styles.search}>
         <input
-          className={styles.search}
+          className={styles.searchInput}
           type="search"
           value={searchValue ?? ''}
           onChange={handleChange}
           placeholder="Search..."
         />
-        <button type="submit" onClick={handleSearchClick}></button>
+        <button
+          className={styles.searchButton}
+          type="submit"
+          onClick={handleSearchClick}
+          aria-label="Search."
+        >
+          <img className={styles.searchButtonIcon} src={searchIcon} />
+        </button>
       </form>
     </>
   );

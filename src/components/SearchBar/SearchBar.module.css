@@ -1,3 +1,13 @@
 .search {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.searchInput {
   padding: 5px 10px;
+}
+
+.searchButton {
+  padding: 5px 8px;
 }
