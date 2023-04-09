@@ -7,10 +7,11 @@ import searchIcon from '../../assets/search.png';
 type SearchBarProps = {
   setCardsData: (value: CardDataType[]) => void;
   setIsLoading: (value: boolean) => void;
+  setError: (value: string) => void;
 };
 
 function SearchBar(props: SearchBarProps) {
-  const { setCardsData, setIsLoading } = props;
+  const { setCardsData, setIsLoading, setError } = props;
   const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') ?? '');
   const searchRef = useRef<string>(searchValue);
 
@@ -29,7 +30,7 @@ function SearchBar(props: SearchBarProps) {
 
   const handleSearchClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    updateCardsData(searchRef.current, setCardsData, setIsLoading);
+    updateCardsData(searchRef.current, setCardsData, setIsLoading, setError);
     localStorage.setItem('searchValue', searchRef.current);
   };
 

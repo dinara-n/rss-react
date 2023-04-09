@@ -4,7 +4,8 @@ import { CardDataType, CharactersResponse } from '../types/types';
 export const updateCardsData = (
   searchValue: string,
   setCardsData: (value: CardDataType[]) => void,
-  setIsLoading: (value: boolean) => void
+  setIsLoading: (value: boolean) => void,
+  setError: (value: string) => void
 ) => {
   setIsLoading(true);
   const url = searchValue === '' ? apiUrl : `${apiUrl}?search=${searchValue}`;
@@ -13,10 +14,19 @@ export const updateCardsData = (
       if (response.ok) {
         return response.json();
       }
+      if (response.status === 404) {
+        throw new Error('The data is not found');
+      }
+      if (response.status === 401 || response.status === 403) {
+        throw new Error('Something went wrong');
+      }
     })
     .then((data: CharactersResponse) => {
-      setCardsData(data.results);
+      setCardsData(data?.results ?? []);
       setIsLoading(false);
     })
-    .catch((err: Error) => console.log(err.message));
+    .catch((err: Error) => {
+      setError(err.message);
+      setIsLoading(false);
+    });
 };
