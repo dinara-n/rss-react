@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../../components/Card/Card';
+import { CardDataType } from '../../types/types';
 import styles from './CardsList.module.css';
-import { CardDataType } from 'types/types';
 
 type CardsListProps = {
   cards: CardDataType[];

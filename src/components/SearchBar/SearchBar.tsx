@@ -1,15 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './SearchBar.module.css';
+import { CardDataType } from '../../types/types';
+import { updateCardsData } from '../../helpers/api';
 
-function SearchBar() {
+type SearchBarProps = {
+  setCardsData: (value: CardDataType[]) => void;
+  setIsLoading: (value: boolean) => void;
+};
+
+function SearchBar(props: SearchBarProps) {
+  const { setCardsData, setIsLoading } = props;
   const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') ?? '');
   const searchRef = useRef<string>(searchValue);
 
   useEffect(() => {
     setSearchValue(localStorage.getItem('searchValue') ?? '');
-  }, []);
-
-  useEffect(() => () => localStorage.setItem('searchValue', searchRef.current), [searchRef]);
+    return () => localStorage.setItem('searchValue', searchRef.current);
+  }, [setSearchValue]);
 
   useEffect(() => {
     searchRef.current = searchValue;
@@ -17,6 +24,12 @@ function SearchBar() {
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(evt.target.value);
+  };
+
+  const handleSearchClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    updateCardsData(searchRef.current, setCardsData, setIsLoading);
+    localStorage.setItem('searchValue', searchRef.current);
   };
 
   return (
@@ -29,6 +42,7 @@ function SearchBar() {
           onChange={handleChange}
           placeholder="Search..."
         />
+        <button type="submit" onClick={handleSearchClick}></button>
       </form>
     </>
   );
