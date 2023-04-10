@@ -17,6 +17,12 @@ export type CardDataType = {
   gender: CharacterGender;
   url?: string;
   image?: string;
+  homeworld?: string;
+  films?: string[];
+  vehicles?: string[];
+  starships?: string[];
+  created?: string;
+  edited?: string;
 };
 
 export enum CharacterGender {

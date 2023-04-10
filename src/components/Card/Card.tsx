@@ -15,25 +15,13 @@ function Card(props: CardProps) {
   return (
     <section className={styles.card}>
       <h3 className={styles.title}>{cardData.name}</h3>
-      <img className={styles.image} src={cardData.image} />
+      {!!cardData.image && <img className={styles.image} src={cardData.image} />}
       <dl>
-        {!!cardData.height && (
-          <div className={styles.parameter}>
-            <dt className={styles.paramName}>Height:</dt>
-            <dd className={styles.paramData}>{cardData.height} sm</dd>
-          </div>
-        )}
-        {!!cardData.mass && (
-          <div className={styles.parameter}>
-            <dt className={styles.paramName}>Mass:</dt>
-            <dd className={styles.paramData}>{cardData.mass} kg</dd>
-          </div>
-        )}
         <div className={styles.parameter}>
           <dt className={styles.paramName}>Date of birth:</dt>
           <dd className={styles.paramData}>{cardData.birth_year}</dd>
         </div>
-        {!!cardData.species && (
+        {!!cardData.species && typeof cardData.species === 'string' && (
           <div className={styles.parameter}>
             <dt className={styles.paramName}>Species:</dt>
             <dd className={styles.paramData}>{cardData.species}</dd>
