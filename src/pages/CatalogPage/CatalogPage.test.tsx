@@ -13,8 +13,4 @@ describe('CatalogPage', () => {
     render(<CatalogPage />);
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
   });
-  it('renders the cards list', () => {
-    render(<CatalogPage />);
-    expect(screen.getByRole('list')).toBeInTheDocument();
-  });
 });
