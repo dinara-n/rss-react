@@ -1,3 +1,10 @@
+export type CharactersResponse = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: CardDataType[];
+};
+
 export type CardDataType = {
   name: string;
   height?: string;
@@ -9,7 +16,13 @@ export type CardDataType = {
   species?: CharacterSpecies;
   gender: CharacterGender;
   url?: string;
-  image: string;
+  image?: string;
+  homeworld?: string;
+  films?: string[];
+  vehicles?: string[];
+  starships?: string[];
+  created?: string;
+  edited?: string;
 };
 
 export enum CharacterGender {

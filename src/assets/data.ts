@@ -10,6 +10,8 @@ import biggsDardlighter from './BiggsHS-ANH.webp';
 import obiwanKenobi from './Obiwan1.jpg';
 import { CharacterGender } from '../types/types';
 
+export const apiUrl = 'https://swapi.dev/api/people';
+
 export const cardsData = [
   {
     name: 'Luke Skywalker',

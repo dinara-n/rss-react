@@ -1,15 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './SearchBar.module.css';
+import { CardDataType } from '../../types/types';
+import { updateCardsData } from '../../helpers/api';
+import searchIcon from '../../assets/search.png';
 
-function SearchBar() {
+type SearchBarProps = {
+  setCardsData: (value: CardDataType[]) => void;
+  setIsLoading: (value: boolean) => void;
+  setError: (value: string) => void;
+};
+
+function SearchBar(props: SearchBarProps) {
+  const { setCardsData, setIsLoading, setError } = props;
   const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') ?? '');
   const searchRef = useRef<string>(searchValue);
 
   useEffect(() => {
     setSearchValue(localStorage.getItem('searchValue') ?? '');
-  }, []);
-
-  useEffect(() => () => localStorage.setItem('searchValue', searchRef.current), [searchRef]);
+    return () => localStorage.setItem('searchValue', searchRef.current);
+  }, [setSearchValue]);
 
   useEffect(() => {
     searchRef.current = searchValue;
@@ -19,16 +28,30 @@ function SearchBar() {
     setSearchValue(evt.target.value);
   };
 
+  const handleSearchClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    updateCardsData(searchRef.current, setCardsData, setIsLoading, setError);
+    localStorage.setItem('searchValue', searchRef.current);
+  };
+
   return (
     <>
-      <form>
+      <form className={styles.search}>
         <input
-          className={styles.search}
+          className={styles.searchInput}
           type="search"
           value={searchValue ?? ''}
           onChange={handleChange}
           placeholder="Search..."
         />
+        <button
+          className={styles.searchButton}
+          type="submit"
+          onClick={handleSearchClick}
+          aria-label="Search."
+        >
+          <img className={styles.searchButtonIcon} src={searchIcon} />
+        </button>
       </form>
     </>
   );

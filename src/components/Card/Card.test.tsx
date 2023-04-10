@@ -25,10 +25,7 @@ describe('Card', () => {
     render(<Card cardData={cardData} />);
     expect(screen.getByRole('heading', { level: 3 })).toHaveTextContent(/Luke Skywalker/i);
     expect(screen.getAllByRole('img'));
-    expect(screen.getByText('Height:')).toBeInTheDocument();
-    expect(screen.getByText('Mass:')).toBeInTheDocument();
     expect(screen.getByText('Date of birth:')).toBeInTheDocument();
-    expect(screen.getByText('Species:')).toBeInTheDocument();
     expect(screen.getByText('Gender:')).toBeInTheDocument();
   });
 });

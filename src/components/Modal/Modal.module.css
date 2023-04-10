@@ -1,0 +1,45 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  position: relative;
+  padding: 10px 30px 20px;
+  border: 1ps solid #000000;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 0 7px 4px;
+}
+
+.title {
+  text-align: center;
+}
+
+.parameter {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.paramName {
+  color: gray;
+}
+
+.paramData {
+  margin: 0;
+}
