@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardsList from '../../components/CardsList/CardsList';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import { CardDataType } from '../../types/types';
-import { updateCardsData } from '../../helpers/api';
+import { useLazySearchCharactersQuery } from '../../store/apiSlice';
+import { useAppSelector } from '../../hooks/hooks';
 
 function CatalogPage() {
-  const [cardsData, setCardsData] = useState<CardDataType[] | []>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const searchQuery = useAppSelector((state) => state.search.query);
+  const [searchValue, setSearchValue] = useState<string>(searchQuery ?? '');
+  const [trigger, { isLoading, data, isError }] = useLazySearchCharactersQuery();
   useEffect(() => {
-    const search = localStorage.getItem('searchValue') ?? '';
-    updateCardsData(search, setCardsData, setIsLoading, setError);
-  }, []);
+    trigger(searchQuery);
+  }, [searchQuery, trigger]);
   return (
     <>
       <h1>Catalog</h1>
-      <SearchBar setCardsData={setCardsData} setIsLoading={setIsLoading} setError={setError} />
-      {isLoading ? <LoadingSpinner /> : cardsData ? <CardsList cards={cardsData} /> : ''}
-      {error}
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} trigger={trigger} />
+      {isLoading ? <LoadingSpinner /> : data ? <CardsList cards={data?.results ?? []} /> : ''}
+      {isError ? 'Something went wrong' : ''}
     </>
   );
 }

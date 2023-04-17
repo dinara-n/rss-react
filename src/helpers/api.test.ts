@@ -27,7 +27,6 @@ describe('updateCardsData', () => {
   });
   it('returns correct data when search input is not empty', async () => {
     await updateCardsData(searchValueLuke, setCardsData, setIsLoading, setError);
-    console.log(cardsData);
     const characterOneName = cardsData[0].name;
     expect(cardsData.length).toEqual(1);
     expect(characterOneName).toEqual('Luke Skywalker');
