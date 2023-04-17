@@ -14,5 +14,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useSearchCharactersQuery, useLazySearchCharactersQuery, useLazyGetCharacterQuery } =
-  apiSlice;
+export const { useLazySearchCharactersQuery, useLazyGetCharacterQuery } = apiSlice;

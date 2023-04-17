@@ -1,24 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './SearchBar.module.css';
-import { CardDataType } from '../../types/types';
-import { updateCardsData } from '../../helpers/api';
 import searchIcon from '../../assets/search.png';
+import { useAppDispatch } from '../../hooks/hooks';
+import { updateSearchQuery } from '../../store/searchSlice';
 
 type SearchBarProps = {
-  setCardsData: (value: CardDataType[]) => void;
-  setIsLoading: (value: boolean) => void;
-  setError: (value: string) => void;
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+  trigger: (value: string) => void;
 };
 
 function SearchBar(props: SearchBarProps) {
-  const { setCardsData, setIsLoading, setError } = props;
-  const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') ?? '');
-  const searchRef = useRef<string>(searchValue);
-
-  useEffect(() => {
-    setSearchValue(localStorage.getItem('searchValue') ?? '');
-    return () => localStorage.setItem('searchValue', searchRef.current);
-  }, [setSearchValue]);
+  const { searchValue, setSearchValue, trigger } = props;
+  const dispatch = useAppDispatch();
+  const searchRef = useRef<string>(searchValue ?? '');
 
   useEffect(() => {
     searchRef.current = searchValue;
@@ -30,8 +25,8 @@ function SearchBar(props: SearchBarProps) {
 
   const handleSearchClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    updateCardsData(searchRef.current, setCardsData, setIsLoading, setError);
-    localStorage.setItem('searchValue', searchRef.current);
+    dispatch(updateSearchQuery(searchRef.current));
+    trigger(searchValue);
   };
 
   return (
