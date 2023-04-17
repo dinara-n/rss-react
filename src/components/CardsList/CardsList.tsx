@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import Card from '../../components/Card/Card';
 import Modal from '../../components/Modal/Modal';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import { updateModalData } from '../../helpers/api';
-import { apiUrl } from '../../assets/data';
 import { CardDataType } from '../../types/types';
 import styles from './CardsList.module.css';
+import { useLazyGetCharacterQuery } from '../../store/apiSlice';
 
 type CardsListProps = {
   cards: CardDataType[];
@@ -14,12 +13,10 @@ type CardsListProps = {
 function CardsList(props: CardsListProps) {
   const { cards } = props;
   const [modalActive, setModalActive] = useState(false);
-  const [modalData, setModalData] = useState<CardDataType | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const handleModalOpen = (url: string) => {
+  const [trigger, { isLoading, data, isError }] = useLazyGetCharacterQuery();
+  const handleModalOpen = (id: string) => {
     setModalActive(true);
-    updateModalData(url, setModalData, setIsLoading, setError);
+    trigger(id);
   };
   return (
     <section>
@@ -29,7 +26,9 @@ function CardsList(props: CardsListProps) {
             <li
               className={styles.listItem}
               key={card.name}
-              onClick={() => handleModalOpen(card.url || `${apiUrl}/${index}`)}
+              onClick={() =>
+                handleModalOpen(card.url?.split('/').at(-2) || `${(index + 1).toString()}`)
+              }
             >
               <Card cardData={card} />
             </li>
@@ -42,7 +41,11 @@ function CardsList(props: CardsListProps) {
         isLoading ? (
           <LoadingSpinner />
         ) : (
-          <Modal setActive={setModalActive} data={modalData} error={error} />
+          <Modal
+            setActive={setModalActive}
+            data={data}
+            error={isError ? 'Something went wrong' : ''}
+          />
         )
       ) : (
         ''
